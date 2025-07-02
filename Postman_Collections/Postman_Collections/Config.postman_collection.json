@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "41eb9ddb-4bd5-400e-b813-f21bbc87a29e",
+		"name": "Config",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3813273"
+	},
+	"item": [
+		{
+			"name": "Config",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8071/account/dev",
+					"host": [
+						"localhost"
+					],
+					"port": "8071",
+					"path": [
+						"account",
+						"dev"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Encrypt",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "Hello Dara"
+				},
+				"url": {
+					"raw": "localhost:8071/encrypt",
+					"host": [
+						"localhost"
+					],
+					"port": "8071",
+					"path": [
+						"encrypt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Decrypt",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "23ed5f1bf15d6a83588453ebc1a1aea6dbc8c34574e267be72b968692a519166"
+				},
+				"url": {
+					"raw": "localhost:8071/decrypt",
+					"host": [
+						"localhost"
+					],
+					"port": "8071",
+					"path": [
+						"decrypt"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

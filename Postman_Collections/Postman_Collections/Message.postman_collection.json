@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "3aae11cf-dfc8-4467-aa7a-ccabf2fbcc35",
+		"name": "Message",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3813273"
+	},
+	"item": [
+		{
+			"name": "email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\":1,\r\n    \"name\":\"Dara\",\r\n    \"email\":\"dara@gmail.com\",\r\n    \"mobileNumber\":\"077889977\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/email",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sms",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\":1,\r\n    \"name\":\"Dara\",\r\n    \"email\":\"dara@gmail.com\",\r\n    \"mobileNumber\":\"077889977\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/sms",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sms"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
