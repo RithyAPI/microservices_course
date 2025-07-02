@@ -1,3 +1,7 @@
+🏦 Bank Microservices System
+📌 Overview
+This is a cloud-native microservices-based banking system built with Spring Boot and designed to run in a Kubernetes environment. It includes services for managing Accounts, Loans, and Cards, and is equipped with infrastructure tools like Config Server, Eureka, API Gateway, RabbitMQ, and Kafka.
+
 🧩 Microservices
 | Service           | Description                            | Database   |
 | ----------------- | -------------------------------------- | ---------- |
