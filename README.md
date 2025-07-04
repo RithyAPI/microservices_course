@@ -19,3 +19,8 @@ This is a cloud-native microservices-based banking system built with Spring Boot
 | `RabbitMQ`          | Messaging for event-driven communication          |
 | `Kafka`             | Event streaming platform for real-time data       |
 | `Kubernetes + Helm` | Container orchestration and deployment templating |
+
+
+How to run project
+mvn clean install -DskipTests
+mvn spring-boot:run
