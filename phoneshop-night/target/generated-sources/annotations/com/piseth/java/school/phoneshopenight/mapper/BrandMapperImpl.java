@@ -6,7 +6,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-01T19:12:15+0700",
+    date = "2025-07-04T20:10:15+0700",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.15 (Microsoft)"
 )
 public class BrandMapperImpl implements BrandMapper {
