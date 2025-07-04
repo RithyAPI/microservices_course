@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "78f21f8c-f38b-481f-a26b-7185d741b3d9",
+		"name": "Reports",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3813273"
+	},
+	"item": [
+		{
+			"name": "Product Sold",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/reports/2022-02-10/2022-03-30",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reports",
+						"2022-02-10",
+						"2022-03-30"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product Sold V2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/reports/v2/2022-02-10/2022-03-30",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reports",
+						"v2",
+						"2022-02-10",
+						"2022-03-30"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Expense report",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/reports/v2/2022-02-10/2022-03-30",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reports",
+						"v2",
+						"2022-02-10",
+						"2022-03-30"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "938be1c3-46e8-486c-871f-5498ee52084a",
+		"name": "Brand",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3813273"
+	},
+	"item": [
+		{
+			"name": "Create Brand",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Nokia\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/brands",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"brands"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get brand by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/brands/4",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"brands",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get brands",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/brands/4",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"brands",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update brand by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Apple v2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/brands/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"brands",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

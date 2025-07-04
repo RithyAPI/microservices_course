@@ -1,0 +1,18 @@
+{
+	"info": {
+		"_postman_id": "d80f1d8b-06f1-4026-bddd-544746d08ae9",
+		"name": "Model",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3813273"
+	},
+	"item": [
+		{
+			"name": "Create Model",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
