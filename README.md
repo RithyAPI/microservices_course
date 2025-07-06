@@ -44,9 +44,17 @@ kubectl get nodes
 kubectl apply -f filename.yml
 kubectl logs -f eurekaserver-deployment-6fcf996f86-pmhfk
 
-* How to install helm
-1. First you need to install choco
-Reference: 
-2. Second, install helm
-3. Third, download existing helm chart from internet for testing
-4. Four, Create own helm chart
+* How to install helm chart
+https://helm.sh/docs/intro/quickstart/
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm search repo bitnami
+helm repo update
+helm install happy-penda bitnami/wordpress
+helm uninstall happy-penda
+help ls
+
+Use port-forward:
+kubectl port-forward svc/happy-penda-wordpress 8080:80
+
+
+https://github.com/bitnami/charts
