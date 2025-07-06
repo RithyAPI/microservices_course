@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: eurekaserver
-        image: pisethbank/eurekaserver:v2
+        image: pisethbank/eurekaserver:v3
         ports:
         - containerPort: 9001
         env:

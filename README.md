@@ -20,7 +20,33 @@ This is a cloud-native microservices-based banking system built with Spring Boot
 | `Kafka`             | Event streaming platform for real-time data       |
 | `Kubernetes + Helm` | Container orchestration and deployment templating |
 
+* Pre setup
+JDK 17 
+Maven 3.9.10
+Docker Desktop
 
-How to run project
+* How to run project
 mvn clean install -DskipTests
 mvn spring-boot:run
+
+* How to build docker image
+mvn compile jib:dockerBuild
+
+* how to deploy on docker-compose
+docker compose up -d --build
+
+* How to deploy k8s
+kubectl get service
+kubectl get deployment
+kubectl get pods
+kubectl get configmap
+kubectl get nodes
+kubectl apply -f filename.yml
+kubectl logs -f eurekaserver-deployment-6fcf996f86-pmhfk
+
+* How to install helm
+1. First you need to install choco
+Reference: 
+2. Second, install helm
+3. Third, download existing helm chart from internet for testing
+4. Four, Create own helm chart
