@@ -43,6 +43,9 @@ kubectl get configmap
 kubectl get nodes
 kubectl apply -f filename.yml
 kubectl logs -f eurekaserver-deployment-6fcf996f86-pmhfk
+kubectl get pvc
+kubectl delete pvc _name
+kubectl proxy
 
 * How to install helm chart
 https://helm.sh/docs/intro/quickstart/
@@ -55,6 +58,6 @@ help ls
 
 Use port-forward:
 kubectl port-forward svc/happy-penda-wordpress 8080:80
-
+kubectl port-forward --namespace default svc/prometheus-kube-prometheus-prometheus 9090:9090
 
 https://github.com/bitnami/charts
