@@ -61,3 +61,28 @@ kubectl port-forward svc/happy-penda-wordpress 8080:80
 kubectl port-forward --namespace default svc/prometheus-kube-prometheus-prometheus 9090:9090
 
 https://github.com/bitnami/charts
+
+
+Start docker compose
+docker compose up --pull always
+# Core services
+docker pull postgres:15
+docker pull quay.io/keycloak/keycloak:23.0.4
+docker pull mvertes/alpine-mongo:latest
+docker pull nginx:latest
+
+# Custom PisethBank images (you must have access to this registry)
+docker pull pisethbank/configserver:v2
+docker pull pisethbank/eurekaserver:v2
+docker pull pisethbank/account:v2
+docker pull pisethbank/card:v2
+docker pull pisethbank/loan:v2
+docker pull pisethbank/gatewayserver:v2
+
+# Observability stack
+docker pull grafana/loki:2.9.2
+docker pull grafana/promtail:2.9.2
+docker pull minio/minio
+docker pull prom/prometheus:v2.45.0
+docker pull grafana/tempo
+docker pull grafana/grafana:latest
