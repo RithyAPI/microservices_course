@@ -27,29 +27,13 @@ services:
       service: ms-deploy-network
 
   keycloak:
-    image: quay.io/keycloak/keycloak:23.0.4
-    container_name: keycloak
+    image: quay.io/keycloak/keycloak:26.3.1
+    command: start-dev
     ports:
-      - "9080:8080"
+      - "127.0.0.1:8080:8080"
     environment:
-      KEYCLOAK_ADMIN: "admin"
-      KEYCLOAK_ADMIN_PASSWORD: "admin"
-      KC_DB: postgres
-      KC_DB_URL_HOST: postgres
-      KC_DB_URL_DATABASE: kdb
-      KC_DB_PASSWORD: kadmin
-      KC_DB_USERNAME: kadmin
-      KC_DB_SCHEMA: public
-      KC_HOSTNAME_STRICT: "false"     # ✅ allow flexible access
-      KC_HTTP_ENABLED: "true"         # ✅ enable HTTP access
-      KC_PROXY: "edge"                # ✅ trust edge proxy (for dev)
-    command: "start-dev"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    extends:
-      file: common.yml
-      service: ms-deploy-network
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
 
   read:
     image: grafana/loki:2.9.2
