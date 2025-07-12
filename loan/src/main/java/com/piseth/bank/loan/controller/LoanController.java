@@ -47,7 +47,7 @@ public class LoanController {
 			@RequestHeader("pisethbank-correlation-id") String correlationId,
 			@PathVariable Long customerId){
 		//System.out.println("=========== Loan service is called ==============");
-		//log.debug("Correlation id found: {}", correlationId);
+		log.debug("Correlation id found: {}", correlationId);
 		
 		log.debug("fetchLoanDetail method start");
 		List<Loan> loans = loanService.getByCustomerId(customerId);

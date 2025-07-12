@@ -46,6 +46,8 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
+    ports:
+      - "8080:8080"
     environment:
       SPRING_APPLICATION_NAME: "account"
       OTEL_SERVICE_NAME: "account"
