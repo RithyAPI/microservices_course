@@ -1,17 +1,27 @@
-version: "3.8"
 services:
 
-  postgres: 
-    image: postgres:15   
+  postgres:
+    image: postgres:15
     environment:
-      # Environment Variables expecially for Postgres
       POSTGRES_DB: kdb
       POSTGRES_USER: kadmin
       POSTGRES_PASSWORD: kadmin
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: "exit 0"
+    extends:
+      file: common.yml
+      service: ms-deploy-network
+
+  mongodb:
+    image: mvertes/alpine-mongo:latest
+    ports:
+      - "7777:27017"
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      - mongo_data:/data/db
     extends:
       file: common.yml
       service: ms-deploy-network
@@ -20,7 +30,7 @@ services:
     image: quay.io/keycloak/keycloak:23.0.4
     container_name: keycloak
     ports:
-      - "9080:8080"
+      - "127.0.0.1:9080:8080"
     environment:
       KEYCLOAK_ADMIN: "admin"
       KEYCLOAK_ADMIN_PASSWORD: "admin"
@@ -31,135 +41,12 @@ services:
       KC_DB_USERNAME: kadmin
       KC_DB_SCHEMA: public
     command: "start-dev"
-    depends_on:      
+    depends_on:
       postgres:
         condition: service_healthy
     extends:
       file: common.yml
       service: ms-deploy-network
-
-  configserver:
-    image: pisethbank/configserver:v2
-    container_name: configserver-ms
-    healthcheck:
-      test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
-    ports:
-      - "8071:8071"
-    environment:
-      SPRING_APPLICATION_NAME: "configserver"
-      OTEL_SERVICE_NAME: "configserver"
-    extends:
-      file: common.yml
-      service: ms-base
-    
-
-  eurekaserver:
-    image: pisethbank/eurekaserver:v2
-    container_name: eurekaserver-ms
-    healthcheck:
-      test: "curl --fail --silent localhost:9001/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
-    ports:
-      - "9001:9001"
-    environment:
-      SPRING_APPLICATION_NAME: "eurekaserver"
-      OTEL_SERVICE_NAME: "eurekaserver"
-    extends:
-      file: common.yml
-      service: ms-base-configserver
-
-  
-
-  mongodb:
-    image: mvertes/alpine-mongo:latest
-    ports:
-      - "7777:27017"
-    volumes:
-      - './data:/data/db'
-    extends:
-      file: common.yml
-      service: ms-deploy-network
-
-  account:
-    image: pisethbank/account:v2
-    container_name: account-ms
-    healthcheck:
-      test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
-    environment:
-      SPRING_APPLICATION_NAME: "account"
-      OTEL_SERVICE_NAME: "account"
-    extends:
-      file: common.yml
-      service: ms-base-eurekaserver
-
-  card:
-    image: pisethbank/card:v2
-    container_name: card-ms
-    healthcheck:
-      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
-    ports:
-      - "8070:8070"
-    environment:
-      MONGODB_HOST_NAME: mongodb
-      SPRING_APPLICATION_NAME: "card"
-      OTEL_SERVICE_NAME: "card"
-    extends:
-      file: common.yml
-      service: ms-base-eurekaserver
-
-  loan:
-    image: pisethbank/loan:v2
-    container_name: loan-ms
-    healthcheck:
-      test: "curl --fail --silent localhost:8090/actuator/health/readiness | grep UP || exit 1"
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
-    ports:
-      - "8090:8090"
-    environment:
-      MONGODB_HOST_NAME: mongodb
-      SPRING_APPLICATION_NAME: "loan"
-      OTEL_SERVICE_NAME: "loan"
-    extends:
-      file: common.yml
-      service: ms-base-eurekaserver
-
-  gatewayserver:
-    image: pisethbank/gatewayserver:v2
-    container_name: gatewayserver-ms
-    ports:
-      - "8072:8072"
-    depends_on: 
-      account:
-        condition: service_healthy
-      card:
-        condition: service_healthy
-      loan:
-        condition: service_healthy
-    environment:
-      SPRING_APPLICATION_NAME: "gatewayserver"
-      OTEL_SERVICE_NAME: "gatewayserver"
-      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"  
-    extends:
-      file: common.yml
-      service: ms-base-eurekaserver
 
   read:
     image: grafana/loki:2.9.2
@@ -201,46 +88,20 @@ services:
     networks:
       <<: *loki-dns
 
-  promtail:
-    image: grafana/promtail:2.9.2
-    volumes:
-      - ../observability/promtail/promtail-local-config.yaml:/etc/promtail/config.yaml:ro
-      - /var/run/docker.sock:/var/run/docker.sock
-    command: -config.file=/etc/promtail/config.yaml
-    depends_on:
-      - gateway
-    extends:
-      file: common.yml
-      service: ms-deploy-network
-
   minio:
     image: minio/minio
-    entrypoint:
-      - sh
-      - -euc
-      - |
-        mkdir -p /data/loki-data && \
-        mkdir -p /data/loki-ruler && \
-        minio server /data
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"   # S3 API
+      - "9041:9001"   # Web UI Console
     environment:
       - MINIO_ROOT_USER=loki
       - MINIO_ROOT_PASSWORD=supersecret
       - MINIO_PROMETHEUS_AUTH_TYPE=public
       - MINIO_UPDATE=off
-    ports:
-      - 9000
     volumes:
-      - ./.data/minio:/data
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
-      interval: 15s
-      timeout: 20s
-      retries: 5
-    extends:
-      file: common.yml
-      service: ms-deploy-network
+      - minio_data:/data
 
-  
   prometheus:
     image: prom/prometheus:v2.45.0
     container_name: prometheus
@@ -252,27 +113,12 @@ services:
       file: common.yml
       service: ms-deploy-network
 
-  tempo:
-    image: grafana/tempo
-    container_name: tempo
-    command: -config.file /etc/tempo-config.yml
-    ports:
-      - "3110:3100"
-      - "4317:4317"
-    volumes:
-      - ../observability/tempo/tempo.yml:/etc/tempo-config.yml
-    extends:
-      file: common.yml
-      service: ms-deploy-network
-
   grafana:
     image: grafana/grafana:latest
     environment:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-    depends_on:
-      - gateway
     entrypoint:
       - sh
       - -euc
@@ -290,6 +136,33 @@ services:
     extends:
       file: common.yml
       service: ms-deploy-network
+
+  promtail:
+    image: grafana/promtail:2.9.2
+    volumes:
+      - ../observability/promtail/promtail-local-config.yaml:/etc/promtail/config.yaml:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/config.yaml
+    # depends_on:
+    #   - gateway
+    extends:
+      file: common.yml
+      service: ms-deploy-network
+
+  tempo:
+    image: grafana/tempo
+    container_name: tempo
+    command: -config.file /etc/tempo-config.yml
+    ports:
+      - "3110:3100"
+      - "4317:4317"
+    volumes:
+      - ../observability/tempo/tempo.yml:/etc/tempo-config.yml
+    extends:
+      file: common.yml
+      service: ms-deploy-network
+# Service
+
 
   gateway:
     image: nginx:latest
@@ -363,3 +236,8 @@ services:
 
 networks:
   pisethbanknet:
+
+volumes:
+  postgres_data:
+  mongo_data:
+  minio_data:
