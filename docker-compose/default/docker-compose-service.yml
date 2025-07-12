@@ -111,5 +111,18 @@ services:
       file: common.yml
       service: ms-base-eurekaserver
 
+  message:
+    image: pisethbank/message:v2
+    container_name: message-ms
+    # depends_on:
+    #   rabbit:
+    #     condition: service_healthy
+    environment:
+      #SPRING_RABBITMQ_HOST: "rabbit"
+      SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: "kafka:9092"
+    extends:
+      file: common.yml
+      service: ms-deploy-network
+
 networks:
   pisethbanknet:
