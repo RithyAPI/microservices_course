@@ -148,14 +148,15 @@ services:
     extends:
       file: common.yml
       service: ms-deploy-network
-
+      
   tempo:
-    image: grafana/tempo
+    image: grafana/tempo:2.8.1   # pin the version you tested
     container_name: tempo
-    command: -config.file /etc/tempo-config.yml
+    command: -config.file=/etc/tempo-config.yml
     ports:
-      - "3110:3100"
-      - "4317:4317"
+      - "3110:3100"   # optional host-side mapping for Tempo HTTP
+      - "4317:4317"   # optional host-side mapping for Tempo gRPC API
+      - "4318:4318"   # expose OTLP gRPC for local debugging if desired
     volumes:
       - ../observability/tempo/tempo.yml:/etc/tempo-config.yml
     extends:
