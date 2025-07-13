@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="UTAttendanceAPi:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>UTAttendanceAPi</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="UTAttendanceAPi-v1.0.war">
+      <element id="artifact" artifact-name="UTAttendanceAPi:war exploded" />
+    </root>
+  </artifact>
+</component>

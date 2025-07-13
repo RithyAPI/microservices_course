@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ut.utAttendance.mapper.primary.UserMapper">
+
+  <resultMap id="User" type="com.ut.utAttendance.model.Users.User">
+
+  </resultMap>
+
+  <resultMap id="UserGroupList" type="com.ut.utAttendance.model.Users.UserGroupList">
+
+  </resultMap>
+
+  <resultMap id="UserResponse" type="com.ut.utAttendance.model.response.UserResponse">
+
+  </resultMap>
+
+</mapper>
